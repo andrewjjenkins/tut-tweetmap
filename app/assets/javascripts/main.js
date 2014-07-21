@@ -1,6 +1,7 @@
 var app = angular.module('myApp', []);
 
 app.factory('Twitter', function($http, $timeout) {
+    var ws = new WebSocket("ws://localhost:9000/ws");
     
     var twitterService = {
         tweets: [],
@@ -9,10 +10,15 @@ app.factory('Twitter', function($http, $timeout) {
                 success(function (data) {
                     twitterService.tweets = data.statuses;
                 });
+            ws.send(JSON.stringify({query: query}));
         }
     };
-    
-   
+
+    ws.onmessage = function(event) {
+        $timeout(function() {
+            twitterService.tweets = JSON.parse(event.data).statuses;
+        });
+    };
     return twitterService;
 });
 

@@ -1,9 +1,13 @@
 package controllers
 
+import actors.UserActor
+import akka.actor.Props
+
 import play.api._
 import play.api.Play.current
 import play.api.libs.json.{JsObject, JsValue, Json, __}
 import play.api.mvc._
+import play.api.mvc.WebSocket
 import play.api.libs.ws.WS
 
 import scala.concurrent.Future
@@ -34,4 +38,8 @@ object Application extends Controller {
 //  def scratch(path1: String, path2: String) = Action {
 //    Ok(views.html.scratch(path1, path2, "hello"))
 //  }
+
+  def ws = WebSocket.acceptWithActor[JsValue, JsValue] {
+    request => out => Props(new UserActor(out))
+  }
 }

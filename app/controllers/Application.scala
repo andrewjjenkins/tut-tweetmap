@@ -30,4 +30,8 @@ object Application extends Controller {
       case _ => Json.obj("responses" -> Json.arr())
     }
   }
+
+//  def scratch(path1: String, path2: String) = Action {
+//    Ok(views.html.scratch(path1, path2, "hello"))
+//  }
 }

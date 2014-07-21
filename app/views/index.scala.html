@@ -1,7 +1,9 @@
 @(message: String)
 
-@main("Welcome to Twitter map") {
-
-    @play20.welcome(message)
-
+@main(message) {
+  <div ng-controller="Tweets">
+    <ul>
+      <li ng-repeat="tweet in tweets">{{tweet.text}}</li>
+    </ul>
+  </div>
 }

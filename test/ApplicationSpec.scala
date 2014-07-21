@@ -19,12 +19,18 @@ class ApplicationSpec extends Specification {
       route(FakeRequest(GET, "/boum")) must beNone
     }
 
+    "render index template" in {
+      val html = views.html.index("Coco")
+
+      contentAsString(html) must contain("Coco")
+    }
+
     "render the index page" in new WithApplication{
       val home = route(FakeRequest(GET, "/")).get
 
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
-      contentAsString(home) must contain ("Your new application is ready.")
+      contentAsString(home) must contain ("Twitter map")
     }
   }
 }
